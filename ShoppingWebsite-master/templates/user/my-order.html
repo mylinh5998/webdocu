@@ -1,0 +1,82 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load django_template_maths %}
+{% block title %}
+    Giỏ hàng của tôi
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "css/my-order.css" %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <div class="head-table row bg-white">
+                    <div class="col-md-1">#</div>
+                    <div class="col-md-4">Sản phẩm</div>
+                    <div class="col-md-2">Đơn giá</div>
+                    <div class="col-md-1">SL</div>
+                    <div class="col-md-2">Tổng tiền</div>
+                    <div class="col-md-2">Trạng thái</div>
+                </div>
+                {% csrf_token %}
+                {% for item in order %}
+                    <div class="body-table row bg-white">
+                        <div class="col-md-1">
+                            <input type="checkbox" class="cb-order" name="products"
+                                   value="{{ item.id }}" data-mode="{{ item.mode }}">
+                        </div>
+                        <div class="col-md-4">
+                            <img class="image-product" src="{{ item.product.main_picture.url }}">
+                            <a href="/detail/{{ item.product.slug_product }}">{{ item.product.name_product }}</a>
+                        </div>
+                        <div class="col-md-2">
+                            {{ item.product.price }}
+                        </div>
+                        <div class="col-md-1">
+                            <input class="d-inline-block w-100 number" data-id="{{ item.id }}" type="number"
+                                   value="{{ item.number }}"
+                                   min="1" max="{{ item.product.num_available }}"
+                                    {% if item.mode >= 2 %}
+                                   readonly
+                                    {% endif %}
+                            >
+                        </div>
+                        <div class="col-md-2">{{ item.product.price|mul:item.number|separator:'comma' }}đ</div>
+                        <div class="col-md-2">
+                            {% if item.product.num_available < 1 %}
+                                <span class="text-danger">Hết hàng</span>
+                                <br><a class="text-success addInfo" data-id="{{ item.id }}">Thêm thông tin</a>
+                            {% elif item.mode == 0 %}
+                                <span class="text-muted">Chưa đặt</span>
+                                <br><a class="text-success addInfo" data-id="{{ item.id }}">Thêm thông tin</a>
+                            {% elif item.mode == 1 %}
+                                <span class="text-warning">Đã đặt hàng</span>
+                            {% elif item.mode == 2 %}
+                                <span class="text-info">Đã chấp nhận</span><br>
+                                <a class="received text-success" data-id="{{ item.id }}">Đã nhận?</a>
+                            {% elif item.mode == 3 %}
+                                <span class="text-success">Đã nhận hàng</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="btn-group float-right" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success" id="handleOrder">Đặt hàng</button>
+                    <button type="button" class="btn btn-danger" id="delete">Xóa sản phẩm</button>
+                    <button type="button" class="btn btn-primary" id="updateNumber">Cập nhật số lượng</button>
+                    <button type="button" class="btn" id="payment" st>Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/handle-my-order.js" %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}

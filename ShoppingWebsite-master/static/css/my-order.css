@@ -1,0 +1,29 @@
+.head-table{
+    padding: 15px 0px;
+    margin-bottom: 10px;
+}
+.body-table{
+    padding: 10px 0px;
+    margin-bottom: 10px;
+}
+.bg-white{
+    background-color: #fff;
+}
+.d-inline-block{
+    display: inline-block !important;
+}
+.w-100{
+    width: 100%;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute !important;
+    pointer-events: all !important;
+    opacity: 1 !important;
+}
+.image-product{
+    max-height: 100px;
+    max-width: 100px;
+}
+.btn{
+background-color:pink;
+}

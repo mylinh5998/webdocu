@@ -1,0 +1,58 @@
+.product{
+    margin-top: 10px;
+}
+.product > .container_ > h4{
+    padding: 10px;
+    margin-bottom: 0px;
+    color: #ee4d2d;
+    background-color: #fff;
+}
+.product-list > div{
+    height: 250px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.product-list{
+    margin-top: 10px;
+}
+.product-item{
+    background-color: #fff;
+    height: 100%;
+    position: relative;
+}
+.product-img, .product-price, .product-sold, .product-title{
+    position: absolute;
+}
+.product-price{
+    color: #ee4d2d;
+    bottom: 0px;
+    left: 0px;
+    padding-left: 5px;
+}
+.product-sold{
+    font-size: 12px;
+    bottom: 0px;
+    right: 0px;
+    padding-right: 5px;
+    color: rgba(0,0,0,.54);
+}
+.product-title{
+    color: rgba(0,0,0,.8);
+    font-size: 14px;
+    bottom: 24px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.product-img{
+    top: 0px;
+    height: 70%;
+    width: 100%;
+    object-fit: contain;
+}
+.item-product{
+    margin-bottom: 10px;
+}
+.title-section{
+    padding:13px;
+}

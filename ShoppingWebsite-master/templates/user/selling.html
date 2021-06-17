@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load django_template_maths %}
+{% block title %}
+    Xem ai đã đặt hàng
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "css/my-order.css" %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <div class="head-table row bg-white">
+                    <div class="col-md-1">#</div>
+                    <div class="col-md-4">Sản phẩm</div>
+                    <div class="col-md-2">Người mua</div>
+                    <div class="col-md-1">SL</div>
+                    <div class="col-md-2">Tổng tiền</div>
+                    <div class="col-md-2">Trạng thái</div>
+                </div>
+                {% csrf_token %}
+                {% for item in orders %}
+                    <div class="body-table row bg-white">
+                        <div class="col-md-1">
+                            <a class="show-detail" data-id="{{ forloop.counter }}">Xem</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/detail/{{ item.product.slug_product }}">{{ item.product.name_product }}</a>
+                        </div>
+                        <div class="col-md-2">
+                            <a>{{ item.user.get_full_name }}</a>
+                        </div>
+                        <div class="col-md-1">
+                            {{ item.number }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ 100|sub:item.product.discount|mul:item.number|mul:item.product.price|div:100 }}đ
+                        </div>
+                        <div class="col-md-2">
+                            {% if item.mode == 1 %}
+                                <span>Đang chờ</span><br>
+                                <a class="accept text-success" data-id="{{ item.id }}">Đã gửi</a>
+                            {% elif item.mode == 2 %}
+                                <span class="text-success">Đã chấp nhận</span>
+                            {% elif item.mode == 3 %}
+                                <span>Đã nhận hàng</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="bg-white p-20 mgb-20" id="view-{{ forloop.counter }}" style="display: none">
+                    <p>Tên người mua: {{ item.user.get_full_name }}</p>
+                    <p>Số điện thoại: {% firstof item.user.phone "Trống" %}</p>
+                    <p>Email: {% firstof item.user.email "Trống" %}</p>
+                    <p>Địa chỉ: {{ item.user.address }} - <a href="https://www.google.com/maps/place/{{ item.user.address }}">Bản đồ</a></p>
+                    <p>Thông tin bổ sung: {% firstof item.add_info "Trống" %}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/handleSelling.js" %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}

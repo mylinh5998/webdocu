@@ -1,0 +1,87 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    Đăng kí tài khoản
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/register.css" %}">
+
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="container_">
+            <form method="post" action="/user/register/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {% for field in form %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            Tên đăng nhập
+                            <span class="text-danger">*</span>
+                        </td>
+                        <td>{{ form.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mật khẩu
+                            <span class="text-danger">*</span>
+                        </td>
+                        <td>{{ form.password }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tên
+                            <span class="text-danger">*</span>
+                        </td>
+                        <td>{{ form.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Họ và tên lót</td>
+                        <td>{{ form.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Giới tính
+                            <span class="text-danger">*</span>
+                        </td>
+                        <td>{{ form.sex }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ngày sinh
+                            <span class="text-danger">*</span>
+                        </td>
+                        <td>{{ form.date_of_birth }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ form.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td>{{ form.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ</td>
+                        <td>{{ form.address }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ảnh đại diện</td>
+                        <td>{{ form.avatar }}</td>
+                    </tr>
+                </table>
+                <button class="btn-submit" type="submit">ĐĂNG KÍ</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

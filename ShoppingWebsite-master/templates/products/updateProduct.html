@@ -1,0 +1,134 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    Cập nhật sản phẩm
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link rel="stylesheet" href="{% static "css/addNewProduct.css" %}">
+    <link rel="stylesheet" href="{% static "css/knockout-file-bindings.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <section class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Chỉnh sữa sản phẩm</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <form id="productForm" class="form-horizontal" role="form" enctype="multipart/form-data"
+                              method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">Tên sản phẩm</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name" id="name"
+                                           placeholder="Nhập tên sản phẩm..." value="{{ product.name_product }}" required>
+                                </div>
+                            </div> <!-- form-group // -->
+                            <div class="form-group">
+                                <label for="describe" class="col-sm-3 control-label">Mô tả ngắn</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="describe" id="name"
+                                           placeholder="Tóm tắt về sản phẩm này" value="{{ product.describe }}">
+                                </div>
+                            </div> <!-- form-group // -->
+                            <div class="form-group">
+                                <label for="about" class="col-sm-3 control-label">Nội dung</label>
+                                <div class="col-sm-9">
+                                    <textarea name="content" class="form-control"
+                                              placeholder="Giới thiệu chi tiết về sản phẩm">{{ product.content }}"</textarea>
+                                </div>
+                            </div> <!-- form-group // -->
+                            <div class="form-group">
+                                <label for="available" class="col-sm-3 control-label">Số lượng</label>
+                                <div class="col-sm-3">
+                                    <input type="number" class="form-control" name="available" id="qty"
+                                           placeholder="Số lượng hàng có sẵn" min="0" step="1" value="{{ product.num_available }}" required>
+                                </div>
+                            </div> <!-- form-group // -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Giá tiền</label>
+                                <div class="col-sm-3">
+                                    <label class="control-label small" for="price">Giá trị thực (vnđ): </label>
+                                    <input type="number" class="form-control" name="price" id="date_start"
+                                           placeholder="Giá tiền" min="0" step="1000" value="{{ product.price }}" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="control-label small" for="discount">Khuyến mãi (%):</label>
+                                    <input type="number" class="form-control" name="discount" id="date_finish"
+                                           placeholder="Discount" min="0" max="100" step="1" value="{{ product.discount }}" required>
+                                </div>
+                            </div> <!-- form-group // -->
+                            <div class="form-group">
+                                <label for="tech" class="col-sm-3 control-label">Loại sản phẩm</label>
+                                <div class="col-sm-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+                                                Chọn loại sản phẩm</h3>
+                                        </div>
+                                        <ul class="list-group list-category">
+                                            {% for item in category %}
+                                                <label for="{{ item.name_category }}"
+                                                    {% if item.id in categorySelected %}
+                                                        class="list-group-item active"
+                                                    {% else %}
+                                                       class="list-group-item"
+                                                    {% endif %}
+                                                >
+                                                    {{ item.name_category }}
+                                                    <input class="d-none checkbox-category"
+                                                           id="{{ item.name_category }}"
+                                                           style="opacity: 1" type="checkbox"
+                                                           onchange="activeCategory(this)"
+                                                           value="{{ item.id }}" name="category"
+                                                    {% if item.id in categorySelected %}
+                                                        checked
+                                                    {% endif %}
+                                                    >
+                                                </label>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> <!-- form-group // -->
+                            <hr>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button id="btnSubmit" type="submit" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </div> <!-- form-group // -->
+                        </form>
+
+                    </div><!-- panel-body // -->
+                </section><!-- panel// -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js'></script>
+    <script src='{% static "js/knockout-file-bindings.js" %}'></script>
+    <script src='{% static "js/handleUploadImage.js" %}'></script>
+    <script>
+        // handle select category
+
+        function activeCategory(event) {
+            if (event.checked) {
+                event.parentElement.className = "list-group-item active"
+            } else {
+                event.parentElement.className = "list-group-item"
+            }
+        }
+
+
+    </script>
+{% endblock %}

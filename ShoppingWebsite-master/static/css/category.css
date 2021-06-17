@@ -1,0 +1,38 @@
+.portfolio{
+    margin-top: 10px;
+}
+.portfolio > .container_{
+    background-color: #fff;
+}
+.list-portfolio > div{
+    height: 200px;
+    border: 0.1px solid rgba(0,0,0,.2);
+} 
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.portfolio-title{
+    padding: 20px;
+    margin: 0px;
+    color: rgba(0,0,0,.54);
+}
+.list-portfolio > div > a > img{
+    display: block;
+    margin: auto;
+    width: 80%;
+    border-radius: 100px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.wrapper-img-type{
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+}
+.img-categry{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

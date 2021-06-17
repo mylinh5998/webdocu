@@ -1,0 +1,104 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    Trang cá nhân
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "css/infomation.css" %}">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <!--CONTENT HERE-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Thông tin tài khoản</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                        <tr>
+                                            <td><b>Thông tin cá nhân: </b></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Họ và tên:</td>
+                                            <td>{% firstof user.get_full_name "Trống" %}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ngày sinh:</td>
+                                            <td>{% firstof user.date_of_birth "Trống" %}</td>
+                                        </tr>
+                                        <tr>
+                                        <tr>
+                                            <td>Giới tính:</td>
+                                            <td>
+                                                {% if user.sex == 1 %}
+                                                    Nam
+                                                {% endif %}
+                                                {% if user.sex == -1 %}
+                                                    Nữ
+                                                {% endif %}
+                                                {% if user.sex == 0 %}
+                                                    Không xác định
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Địa chỉ:</td>
+                                            <td>{% firstof user.address "Trống" %}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b> Thông tin liên hệ:</b></td>
+                                            <td></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>
+                                                {% firstof user.email "Trống" %}
+                                                {% if user.email and not user.is_active_email %}
+                                                    <a href="/user/sendemail" class="btn btn-xs btn-danger">Kích hoạt</a>
+                                                {% endif %}
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Số điện thoại:</td>
+                                            <td>
+                                                {% firstof user.phone "Trống" %}
+                                                {% if user.phone and not user.is_active_phone %}
+                                                    <a href="#" class="btn btn-xs btn-danger">Kích hoạt</a>
+                                                {% endif %}
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <a href="/user/profile/edit/" class="btn btn-primary" style="width:140px">Chỉnh
+                                        sữa</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!--END HERE-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}

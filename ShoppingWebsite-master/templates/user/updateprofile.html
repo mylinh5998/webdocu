@@ -1,0 +1,137 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    Chỉnh sửa thông tin
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "css/infomation.css" %}">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <!--CONTENT HERE-->
+                    <form class="form-horizontal" id="formUpdate" onsubmit="return updateProfile()">
+                        {% csrf_token %}
+                        <fieldset>
+
+                            <!-- Form Name -->
+                            <legend>Chỉnh sửa thông tin</legend>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">
+                                    Tên
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Họ và tên lót</label>
+                                <div class="col-md-4">
+                                    {{ form.last_name }}
+
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">
+                                    Giới tính
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    {{ form.sex }}
+
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectbasic">
+                                    Ngày sinh
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    {{ form.date_of_birth }}
+                                </div>
+                            </div>
+
+                            <!-- Textarea -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textarea">Địa chỉ</label>
+                                <div class="col-md-4">
+                                    {{ form.address }}
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Email</label>
+                                <div class="col-md-4">
+                                    {{ form.email }}
+
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Số điện thoại</label>
+                                <div class="col-md-4">
+                                    {{ form.phone }}
+
+                                </div>
+                            </div>
+                            <!-- Text input-->
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Cập nhật mật khẩu</label>
+                                <div class="col-md-4">
+                                    {{ form.password }}
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">
+                                    Mật khẩu hiện tại
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    {{ form.password_confirm }}
+                                </div>
+                            </div>
+                            <!--Errors-->
+                            <p class="text-center text-red" id="errors"></p>
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary"
+                                            type="submit">Cập nhật
+                                    </button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!--END HERE-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static "js/updateProfile.js" %}"></script>
+{% endblock %}

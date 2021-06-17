@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "css/slide.css" %}">
+    <link rel="stylesheet" href="{% static "css/category.css" %}">
+    <link rel="stylesheet" href="{% static "css/product.css" %}">
+    <link rel="stylesheet" href="{% static "css/filter.css" %}">
+{% endblock %}
+{% block title %}
+    Mua bán thả ga - Hết tiền không la
+{% endblock %}
+{% block body %}
+    {% include "base/slide.html" %}
+    {% include "base/category.html" %}
+    {% include "base/list-product.html" %}
+{% endblock %}
+{% block js %}
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static "js/slide.js" %}"></script>
+    <script>
+        $(".filter__select").change(() => {
+            let query = "";
+            if (window.location.href.indexOf("?") == -1) query += "?"
+            query += "&order-by=" + $("#order-by").children("option:selected").val()
+            query += "&available=" + $("#available").children("option:selected").val()
+            query += "&promotion=" + $("#promotion").children("option:selected").val()
+            window.location.href += query
+        })
+        {% if filter.orderBy %}
+            $("#order-by").val("{{ filter.orderBy }}")
+        {% endif %}
+        {% if filter.promotion %}
+            $("#promotion").val("{{ filter.promotion }}")
+        {% endif %}
+        {% if filter.available %}
+            $("#available").val("{{ filter.available }}")
+        {% endif %}
+    </script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}
+    Thêm sản phẩm mới
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+    <link rel="stylesheet" href="{% static "css/show-product.css" %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                {% include "base/asideprofile.html" %}
+            </div>
+            <div class="col-md-9">
+                <section class="panel panel-default">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a href="#">Sản phẩm của tôi</a></li>
+                        <li role="presentation"><a href="#">Đơn hàng đang chờ</a></li>
+                        <li role="presentation"><a href="#">Đơn hàng đã duyệt</a></li>
+                        <li role="presentation"><a href="/manage-product/add-new/" class="btn btn-success">Thêm sản
+                            phẩm</a></li>
+                    </ul>
+
+                    <div class="row pt-20px">
+                        {% for item in products %}
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <div class="wrapper-img">
+                                        <img class="position-absolute object-fit-contain"
+                                             src="{{ item.main_picture.url }}" height="100%" width="100%">
+                                    </div>
+
+                                    <div class="caption">
+                                        <h3>{{ item.name_product }}</h3>
+                                        <p>{{ item.describe }}</p>
+                                        <a href="/detail/{{ item.slug_product }}" class="btn btn-primary" role="button">Xem</a>
+                                        <a href="/manage-product/{{ item.id }}/update" class="btn btn-default"
+                                           role="button">Sữa</a>
+                                        <form class="d-inline" method="post"
+                                              action="/manage-product/{{ item.id }}/delete">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger" role="button">Xóa</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section><!-- panel// -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}
